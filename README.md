@@ -11,5 +11,5 @@ initialize registers $S0 and $S1 with the decimal values 44 and -37 respectively
  addi $s1, $0, 0xFFDB   # a = 0xFFDB
  
 # a + b = c
- addi $s2, $s0, $s1     # c = $s2
+ add $s2, $s0, $s1      # c = $s2
 ```
