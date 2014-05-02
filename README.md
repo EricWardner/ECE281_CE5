@@ -14,5 +14,7 @@ initialize registers $S0 and $S1 with the decimal values 44 and -37 respectively
  add $s2, $s0, $s1      # c = $s2       0x02328020
  
 # store c
- sw $s2, 0x54($0)        # c => 0x54    0x8C0A0020
+ sw $s2, 0x54($0)       # c => 0x54     0x8C0A0020
 ```
+
+###Machine Code
