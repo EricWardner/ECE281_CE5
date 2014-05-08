@@ -32,4 +32,10 @@ initialize registers $S0 and $S1 with the decimal values 44 and -37 respectively
 |```sw $s2, 0x54($0)```|101011|00000 |10010 |0000000001010100|0xAC120054|
 
 ######Simulation
+The given waveform file initially did not work with my created testbench. Looking in the waveform file I noticed in the XML that the filepaths which referenced the desired processes used the name "mips_tb" as the name for the testbench. 
+```XML
+<wvobject fp_name="/mips_tb/uut/dp/rf/wd3" type="array" db_ref_id="1">
+```
+I made a new testbench with this name and the simulation worked!
+
 ![alt tag](https://raw.githubusercontent.com/EricWardner/ECE281_CE5/master/sim_capture.PNG)
