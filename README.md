@@ -30,3 +30,6 @@ initialize registers $S0 and $S1 with the decimal values 44 and -37 respectively
 |Instruction     |op    |  rs  |  rt  |   immediate    | Hex Code|
 |----------------|------|------|------|----------------|--------|
 |```sw $s2, 0x54($0)```|101011|00000 |10010 |0000000001010100|0xAC120054|
+
+######Simulation
+![alt tag](https://raw.githubusercontent.com/EricWardner/ECE281_CE5/master/sim_capture.PNG)
