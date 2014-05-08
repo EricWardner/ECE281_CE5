@@ -38,4 +38,5 @@ The given waveform file initially did not work with my created testbench. Lookin
 ```
 I made a new testbench with this name and the simulation worked!
 (I also sent an email to the class explaining this fix)
+
 ![alt tag](https://raw.githubusercontent.com/EricWardner/ECE281_CE5/master/sim_capture.PNG)
