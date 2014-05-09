@@ -65,3 +65,32 @@ the new instruction can be seen highlighted at the bottom
 ![alt tag](https://raw.githubusercontent.com/EricWardner/ECE281_CE5/master/ALUDecoderTable.PNG)
 
 The ALU should preform an OR operation which already exists in the ALU.
+
+####VHDL Implementation and Functionality
+In order to implement the new schematic in VHDL the two new components had to be made. The zero extendor was created using the sign extender as a template. Its behavior was as follows
+```VHDL
+architecture behave of zeroext is
+begin
+  y <= X"0000" & a; 
+end;
+```
+the 3 selction mux was created using the 2 selection mux as a template
+```VHDL
+architecture behave of mux3 is
+begin
+  y <= d0 when s = "00" else		--0 selection
+		 d1 when s = "01" else		--1 selection
+		 d2 when s = "10";			--2 selection
+end;
+```
+it is important to note that after the mux was created the signal ALUSrc had to be changed to be 2 bits to account for the third selection. This ment changing the signal decleration in all 13 spots. Once the signal declerations were changed the port map in each components decleration had to be changed to reflect the new order of signals. 
+
+#####Simulation
+The instuction ```ori $S3, $S2, x8000`` was converted to its machine code (0x36538000) using the same process as preciously outlined. It was put into the testbench as follows
+```VHDL
+--ori $S3, $S2, x8000  
+		instr <= X"36538000";
+		wait for clk_period;
+```
+When simulated the following waveform was generated.
+![alt tag](https://raw.githubusercontent.com/EricWardner/ECE281_CE5/master/ori_waveform.PNG)
