@@ -63,4 +63,5 @@ the new instruction can be seen highlighted at the bottom
 
 ######ALU Decoder
 ![alt tag](https://raw.githubusercontent.com/EricWardner/ECE281_CE5/master/ALUDecoderTable.PNG)
+
 The ALU should preform an OR operation which already exists in the ALU.
