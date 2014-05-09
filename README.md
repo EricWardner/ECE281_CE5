@@ -40,3 +40,5 @@ I made a new testbench with this name and the simulation worked!
 (I also sent an email to the class explaining this fix)
 
 ![alt tag](https://raw.githubusercontent.com/EricWardner/ECE281_CE5/master/sim_capture.PNG)
+
+loking at the waveform the first instruction is seen "2010002c" this should add the immediate 44 into $S1,  0x2C (44) can be seen in aluout indicating the operation was sucessfully completed in the ALU. The next instruction is correctly seen as "2011ffdb". This shouls load -37 in $s1. the ALU out is ffffffdb which is the two's compliment for -37 indicating sucess. 44 + -37 = 7 so after the next operation a 7 should be seen in the aluout which is there so the add instruction was sucessfull. finally the sw instriction should have wrote the data (7), the signal writedata is 7 on the last instruction so sucess again.
