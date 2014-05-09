@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
--- Company: 
--- Engineer:
+-- Company: USAFA
+-- Engineer: Eric Wardner
 --
 -- Create Date:   10:29:32 05/08/2014
 -- Design Name:   
@@ -97,19 +97,24 @@ BEGIN
    -- Stimulus process
    stim_proc: process
    begin		
-      -- hold reset state for 100 ns.
+		
+		--addi $s0, $0, 44
       instr <= X"2010002C";
 		wait for clk_period;
 		
+		--addi $s1, $0, -37
 		instr <= X"2011FFDB";
 		wait for clk_period;
 		
+		--add $s2, $s0, $s1
 		instr <= X"02119020";
 		wait for clk_period;
 		
+		--ori $S3, $S2, x8000  
 		instr <= X"36538000";
 		wait for clk_period;
 		
+		--sw $s2, 0x54($0)
 		instr <= X"AC120054";
 		wait for clk_period;
 

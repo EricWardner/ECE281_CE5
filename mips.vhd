@@ -1,6 +1,8 @@
 ------------------------------------------------------------
 -- mips.vhd
 -- David_Harris@hmc.edu and Sarah_Harris@hmc.edu 30 May 2006
+--	Eric_Wardner 9 May 2014
+	--added ORI insrtruction to datapath
 -- Single Cycle MIPS processor
 ------------------------------------------------------------
 
@@ -26,7 +28,7 @@ entity controller is -- single cycle control decoder
        pcsrc:			      out STD_LOGIC;
        regdst, regwrite:   out STD_LOGIC;
        jump:               out STD_LOGIC;
-		 alusrc:					out STD_LOGIC_VECTOR(1 downto 0);
+		 alusrc:					out STD_LOGIC_VECTOR(1 downto 0);			--had to change to 2 bits, also the port decleration must refelct this order
        alucontrol:         out STD_LOGIC_VECTOR(2 downto 0));
 end;
 
@@ -129,6 +131,7 @@ entity mux2 is -- two-input multiplexer
        y:      out STD_LOGIC_VECTOR(width-1 downto 0));
 end;
 
+--new entity for the 3 mux
 library IEEE; use IEEE.STD_LOGIC_1164.all;
 entity mux3 is -- three-input multiplexer
   generic(width: integer);
@@ -148,14 +151,14 @@ architecture struct of mips is
          pcsrc:		        out STD_LOGIC;
          regdst, regwrite:   out STD_LOGIC;
          jump:               out STD_LOGIC;
-			alusrc:				  out	STD_LOGIC_VECTOR(1 downto 0);
+			alusrc:				  out	STD_LOGIC_VECTOR(1 downto 0);		--had to change to 2 bits, also the port decleration must refelct this order
          alucontrol:         out STD_LOGIC_VECTOR(2 downto 0));
   end component;
   component datapath
     port(clk, reset:        in  STD_LOGIC;
          memtoreg, pcsrc:   in  STD_LOGIC;
          regdst: 			    in  STD_LOGIC;
-			alusrc:				 in  STD_LOGIC_VECTOR(1 downto 0);
+			alusrc:				 in  STD_LOGIC_VECTOR(1 downto 0);		--had to change to 2 bits, also the port decleration must refelct this order
          regwrite, jump:    in  STD_LOGIC;
          alucontrol:        in  STD_LOGIC_VECTOR(2 downto 0);
          zero:              out STD_LOGIC;
@@ -172,7 +175,7 @@ begin
   cont: controller port map(instr(31 downto 26), instr(5 downto 0),
                             zero, memtoreg, memwrite, pcsrc,
 									 regdst, regwrite, jump, alusrc, alucontrol);
-  dp: datapath port map(clk, reset, memtoreg, pcsrc, regdst, alusrc,
+  dp: datapath port map(clk, reset, memtoreg, pcsrc, regdst, alusrc,			--be careful of order
                         regwrite, jump, alucontrol, zero, pc, instr,
 								aluout, writedata, readdata);
 end;
@@ -182,7 +185,7 @@ architecture struct of controller is
     port(op:                 in  STD_LOGIC_VECTOR(5 downto 0);
          memtoreg, memwrite: out STD_LOGIC;
          branch:			     out STD_LOGIC;
-			alusrc:				  out STD_LOGIC_VECTOR(1 downto 0);
+			alusrc:				  out STD_LOGIC_VECTOR(1 downto 0);	--had to change to 2 bits, also the port decleration must refelct this order
          regdst, regwrite:   out STD_LOGIC;
          jump:               out STD_LOGIC;
          aluop:  			     out STD_LOGIC_VECTOR(1 downto 0));
@@ -221,7 +224,7 @@ begin
 
   regwrite <= controls(9);
   regdst   <= controls(8);
-  alusrc   <= controls(7 downto 6);
+  alusrc   <= controls(7 downto 6);			--the two bits had to be accoutned for
   branch   <= controls(5);
   memwrite <= controls(4);
   memtoreg <= controls(3);
@@ -317,7 +320,7 @@ begin
   ze: zeroext port map(instr(15 downto 0), zeroimm);
 
   -- ALU logic
-  srcbmux: mux3 generic map(32) port map(writedata, signimm, zeroimm, alusrc, srcb);
+  srcbmux: mux3 generic map(32) port map(writedata, signimm, zeroimm, alusrc, srcb); --ensure alusrc is in right order
   --TESTESTESTESTESTESTESTESTESTES
   mainalu:  alu port map(srca, srcb, alucontrol, aluout, zero);
 end;
@@ -394,10 +397,10 @@ architecture behave of mux2 is
 begin
   y <= d0 when s = '0' else d1;
 end;
-
+--Behavior for 3 input mux
 architecture behave of mux3 is
 begin
-  y <= d0 when s = "00" else
-		 d1 when s = "01" else
-		 d2 when s = "10";
+  y <= d0 when s = "00" else		--0 selection
+		 d1 when s = "01" else		--1 selection
+		 d2 when s = "10";			--2 selection
 end;
