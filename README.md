@@ -45,6 +45,7 @@ loking at the waveform the first instruction is seen "2010002c" this should add 
 
 ###Modify the MIPS single-cycle processor by adding the ori instruction
 
+#####Schematic
 The modification to the diagram can be seen below.
 
 ![alt tag](https://raw.githubusercontent.com/EricWardner/ECE281_CE5/master/ori_schematic.png)
@@ -52,3 +53,15 @@ The modification to the diagram can be seen below.
  A new component "zero extender" had to be made since for a bitwise OR operation, the operands have to be the same length. With the ORI operation a register value is being ORd with an immediate and in the MIPS archetecture a register value is 32 bits and an immediate is 16, for the ORI to work the 16 bit immediate had to be "padded" with 16 more zeros, the zero extender accomplishes this task.
 
 The ALU's multiplexor had to be changed to a 3 selection mux becasue if an ORI is going to happen the 32 bit immediate had to be used. Since the mux became a 3 selection there would have to be a 2 bit selection signal to choose, ALUSrc needed to be 2 bits.
+
+#####Decoder Tables
+The tables for the ALU decoder and the main decoder were then updated to account for the new instruction. ORI has an opcode of 13 and is ver similar to addi since it is an immediate instruciton that completes an arithmatic operation. 
+
+######Main Decoder
+![alt tag](https://raw.githubusercontent.com/EricWardner/ECE281_CE5/master/mainDecoder_table.PNG)
+the new instruction can be seen highlighted at the bottom
+
+######ALU Decoder
+![alt tag](https://raw.githubusercontent.com/EricWardner/ECE281_CE5/master/mainDecoder_table.PNG)
+https://raw.githubusercontent.com/EricWardner/ECE281_CE5/master/ALUDecoderTable.PNG
+The ALU should preform an OR operation which already exists in the ALU.
