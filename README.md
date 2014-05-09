@@ -47,7 +47,7 @@ loking at the waveform the first instruction is seen "2010002c" this should add 
 
 The modification to the diagram can be seen below.
 
-![alt tag](https://raw.githubusercontent.com/EricWardner/ECE281_CE5/master/ori_schematic.PNG)
+![alt tag](https://raw.githubusercontent.com/EricWardner/ECE281_CE5/master/ori_schematic.png)
 
  A new component "zero extender" had to be made since for a bitwise OR operation, the operands have to be the same length. With the ORI operation a register value is being ORd with an immediate and in the MIPS archetecture a register value is 32 bits and an immediate is 16, for the ORI to work the 16 bit immediate had to be "padded" with 16 more zeros, the zero extender accomplishes this task.
 
