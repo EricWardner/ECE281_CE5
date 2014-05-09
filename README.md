@@ -66,7 +66,7 @@ the new instruction can be seen highlighted at the bottom
 
 The ALU should preform an OR operation which already exists in the ALU.
 
-####VHDL Implementation and Functionality
+####VHDL Modifications
 In order to implement the new schematic in VHDL the two new components had to be made. The zero extendor was created using the sign extender as a template. Its behavior was as follows
 ```VHDL
 architecture behave of zeroext is
@@ -86,7 +86,7 @@ end;
 it is important to note that after the mux was created the signal ALUSrc had to be changed to be 2 bits to account for the third selection. This ment changing the signal decleration in all 13 spots. Once the signal declerations were changed the port map in each components decleration had to be changed to reflect the new order of signals. 
 
 #####Simulation
-The instuction ```ori $S3, $S2, x8000`` was converted to its machine code (0x36538000) using the same process as preciously outlined. It was put into the testbench as follows
+The instuction ```ori $S3, $S2, x8000``` was converted to its machine code (0x36538000) using the same process as preciously outlined. It was put into the testbench as follows
 ```VHDL
 --ori $S3, $S2, x8000  
 		instr <= X"36538000";
@@ -94,3 +94,9 @@ The instuction ```ori $S3, $S2, x8000`` was converted to its machine code (0x365
 ```
 When simulated the following waveform was generated.
 ![alt tag](https://raw.githubusercontent.com/EricWardner/ECE281_CE5/master/ori_waveform.PNG)
+When 7 is ORd with 8000 the expected result would be 8007 which is what appears in the aluout signal after the operation is run indicating a sucessfull implementaion of the ORI operation
+
+##Documentation
+C3C Spence helped me realize that I had to rename all of the alusrc signals so they were 2 bits. He also compared machine code values to ensure we reached the same answer
+
+C3C Hayden gave me an overall idea of what needed to be changed. He helped me realize that a zero extender was needed and advised me to implement the three selection mux rather than add another 2 selection mux. 
