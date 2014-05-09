@@ -42,3 +42,13 @@ I made a new testbench with this name and the simulation worked!
 ![alt tag](https://raw.githubusercontent.com/EricWardner/ECE281_CE5/master/sim_capture.PNG)
 
 loking at the waveform the first instruction is seen "2010002c" this should add the immediate 44 into $S1,  0x2C (44) can be seen in aluout indicating the operation was sucessfully completed in the ALU. The next instruction is correctly seen as "2011ffdb". This shouls load -37 in $s1. the ALU out is ffffffdb which is the two's compliment for -37 indicating sucess. 44 + -37 = 7 so after the next operation a 7 should be seen in the aluout which is there so the add instruction was sucessfull. finally the sw instriction should have wrote the data (7), the signal writedata is 7 on the last instruction so sucess again.
+
+###Modify the MIPS single-cycle processor by adding the ori instruction
+
+The modification to the diagram can be seen below.
+
+![alt tag](https://raw.githubusercontent.com/EricWardner/ECE281_CE5/master/ori_schematic.PNG)
+
+ A new component "zero extender" had to be made since for a bitwise OR operation, the operands have to be the same length. With the ORI operation a register value is being ORd with an immediate and in the MIPS archetecture a register value is 32 bits and an immediate is 16, for the ORI to work the 16 bit immediate had to be "padded" with 16 more zeros, the zero extender accomplishes this task.
+
+The ALU's multiplexor had to be changed to a 3 selection mux becasue if an ORI is going to happen the 32 bit immediate had to be used. Since the mux became a 3 selection there would have to be a 2 bit selection signal to choose, ALUSrc needed to be 2 bits.
