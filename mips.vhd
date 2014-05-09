@@ -214,7 +214,7 @@ begin
       when "000100" => controls <= "0000100001"; -- BEQ
       when "001000" => controls <= "1001000000"; -- ADDI
       when "000010" => controls <= "0000000100"; -- J
-		when "001101" => controls <= "1010000110"; -- ORI
+		when "001101" => controls <= "1010000011"; -- ORI
       when others   => controls <= "----------"; -- illegal op
     end case;
   end process;
@@ -370,12 +370,12 @@ begin
   y <= a(29 downto 0) & "00";
 end;
 
-architecture behave of signext is
+architecture behave of zeroext is
 begin
   y <= X"0000" & a; 
 end;
 
-architecture behave of zeroext is
+architecture behave of signext is
 begin
   y <= X"0000" & a when a(15) = '0' else X"ffff" & a; 
 end;
